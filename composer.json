@@ -1,0 +1,14 @@
+{
+    "name": "alexandru/alexa",
+    "description": "Gherkin finder",
+    "require": {
+        "twig/twig": "^2.3",
+        "twbs/bootstrap": "^3.3"
+    },
+    "authors": [
+        {
+            "name": "Alexandra Bulearca",
+            "email": "alexandra.bulearca@gmail.com"
+        }
+    ]
+}

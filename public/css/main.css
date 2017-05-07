@@ -1,0 +1,50 @@
+body {
+    min-height: 100%;
+    background-image: url("3.jpg");
+    background-size: cover;
+}
+
+div h1 {
+    font-weight: 500;
+    font-style: normal;
+    text-align: inherit;
+    color: white;
+    text-shadow: -2px 0 black, 0 1px black, 1px 0 black, 0 -2px black;
+    font-size: 45px;
+    font-family: "Lucida Sans Unicode";
+}
+
+form#newSuite input[type=text]{
+    display: inline;
+    width: 50%
+}
+
+form#newFeature input[type=text]{
+    display: inline;
+    width: 50%
+}
+
+div#stepDefinition{
+    display: inline;
+    margin: 0%;
+}
+div#stepDefinition input[type=text] {
+    width: 50%;
+    display: inline;
+    margin: 0%;
+}
+
+div#stepDefinition select#prefixes {
+    width: 15%;
+    display: inline;
+    margin: 0%;
+}
+
+form#newFeature input[type=text] {
+    width: 30%;
+    display: inline;
+}
+form#newFeature select#testSuiteSelect {
+    width: 15%;
+    display: inline;
+}

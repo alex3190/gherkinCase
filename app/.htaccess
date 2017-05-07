@@ -1,0 +1,2 @@
+Options -Indexes
+php_value include_path '.;C:\xampp\php\pear\PEAR;C:\xampp\htdocs\alexa'
