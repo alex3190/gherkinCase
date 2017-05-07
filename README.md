@@ -1,7 +1,7 @@
-#Welcome to GherkinCase
+# Welcome to GherkinCase
 - Basic mvc-based project for writing and storing tests cases.
 - Uses Bootstrap and Twig
 
-##Initialize 
+## Initialize 
 
 - Clone the repository and run composer install
