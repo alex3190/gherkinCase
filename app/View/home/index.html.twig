@@ -34,10 +34,12 @@
     }
 
     function pushText() {
-        var prefix = document.getElementById("stepPrefix").getAttribute('text');
-        var sentence = document.getElementById("stepDefinition").getAttribute('text');
-        var finalStepDef = prefix + sentence;
-        document.getElementById("stepDefinitionFinal").innerHTML("<p> finalStepDef </p>")
+        var textToWrite = document.getElementById("stepPrefix").value + " " + document.getElementById("stepDefinitionSentence").value;
+        var elementToWriteIn = document.getElementById("stepDefinitionFinal");
+        var appendMe = document.createElement('p');
+        appendMe.innerHTML = textToWrite;
+        elementToWriteIn.appendChild(appendMe);
+
     }
 
 </script>
@@ -100,12 +102,12 @@
         <br/>
         <div id="stepDefinition">
             <form id="search" name='stepDefinition' action="" method="post">
-                <select id="prefixes" name="stepPrefix" class="form-control input-lg" required>
+                <select id="stepPrefix" name="stepPrefix" class="input-lg" title="stepPrefix" required>
                     <option value="given">Given</option>
                     <option value="when">When</option>
                     <option value="then">Then</option>
                     <option value="and">And</option>
-                </select><input class="form-control input-lg" type="text" placeholder="What would you like to do?" name="stepDefinition" id="stepDefinition" required/><button onclick="pushText();" class="btn-lg" name="Create New SD" id="createNewSd"></button>
+                </select><input class="input-lg" type="text" placeholder="What would you like to do?" name="stepDefinition" id="stepDefinitionSentence" required/><button type="button" onclick="pushText();" class="input-lg" name="Create New SD" id="createNewSd"></button>
             </form>
         </div>
         <br/>
@@ -139,9 +141,11 @@
                     <input type="submit" name="Save to Feature"  class="btn-md"/>
 
                 </form>
-                <div class="scenario col-md-9" id="right">
-                    <div id="stepDefinitionFinal"> </div>
-                </div>
+
+            </div>
+
+            <div class="scenario col-md-9" id="right">
+                <div id="stepDefinitionFinal"> </div>
             </div>
         </div>
     </div>

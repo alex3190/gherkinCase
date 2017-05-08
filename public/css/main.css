@@ -34,7 +34,12 @@ div#stepDefinition input[type=text] {
     margin: 0%;
 }
 
-div#stepDefinition select#prefixes {
+div#stepDefinition input#createNewSd {
+    display: inline;
+    width: 100%;
+}
+
+div#stepDefinition select#stepPrefix {
     width: 15%;
     display: inline;
     margin: 0%;
