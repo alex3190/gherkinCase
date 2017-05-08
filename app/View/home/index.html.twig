@@ -14,16 +14,18 @@
     function populateFeatureList(){
         var selectedSuite = document.getElementById('testSuitesSelect').value;
         $.post('home/allSuitesJson',
-        {
-            nameOfSuite: selectedSuite
+            {
+                nameOfSuite: selectedSuite
 
-        })
+            })
         //success callback
             .done(function (response) {
-                for ()
-                $("#featureSelect").html(response);
-                console.log('we got here');
-                alert(response); //html page.
+
+                $('#featureSelect').empty();
+                var allNames = JSON.parse(response);
+                $.each(allNames, function(i, name) {
+                    $('#featureSelect').append($('<option>').text(name.name).attr('name', name.name));
+                });
             })
             //failure callback
             .fail(function (error) {
@@ -31,6 +33,12 @@
             });
     }
 
+    function pushText() {
+        var prefix = document.getElementById("stepPrefix").getAttribute('text');
+        var sentence = document.getElementById("stepDefinition").getAttribute('text');
+        var finalStepDef = prefix + sentence;
+        document.getElementById("stepDefinitionFinal").innerHTML("<p> finalStepDef </p>")
+    }
 
 </script>
 <br/>
@@ -58,7 +66,7 @@
         <br/>
         <br/>Create new test suite
         <form action="home/saveNewSuite", method="post" id="newSuite" name="newSuite" title="newSuite">
-            <input type="text" title="newTestSuite" id="newTestSuite" name="newTestSuite" class="form-control input-sm" placeholder="Suite name"/>
+            <input type="text" title="newTestSuite" id="newTestSuite" name="newTestSuite" class="form-control input-sm" placeholder="Suite name" required/>
             <input type="submit" id="saveNewTestSuite" class="btn-md" />
         </form>
 
@@ -66,8 +74,9 @@
         <br/>Create new Feature
 
         <form action="home/saveNewFeature", method="post" id="newFeature" name="newFeature" title="newFeature">
-            <input type="text" id="newFeature" name="newFeature" class="form-control input-sm" placeholder="Feature name"/>
-            <select class="form-control" name="testSuiteFeatureSelect" id="testSuiteSelect">
+            <input type="text" id="newFeature" name="newFeature" class="form-control input-sm" placeholder="Feature name" required/>
+            <select class="form-control" name="testSuiteFeatureSelect" id="testSuiteSelect" required>
+                <option disabled selected value>  </option>
                 {% for suite in testSuites %}
 
                     <option> {{ suite.name }} </option>
@@ -91,16 +100,14 @@
         <br/>
         <div id="stepDefinition">
             <form id="search" name='stepDefinition' action="" method="post">
-                <select id="prefixes" name="stepPrefix" class="form-control input-lg">
+                <select id="prefixes" name="stepPrefix" class="form-control input-lg" required>
                     <option value="given">Given</option>
                     <option value="when">When</option>
                     <option value="then">Then</option>
                     <option value="and">And</option>
-                </select><input class="form-control input-lg" type="text" placeholder="What would you like to do?" name="stepDefinition" /><input type="submit" class="btn-lg" name="Create New SD">
+                </select><input class="form-control input-lg" type="text" placeholder="What would you like to do?" name="stepDefinition" id="stepDefinition" required/><button onclick="pushText();" class="btn-lg" name="Create New SD" id="createNewSd"></button>
             </form>
-
         </div>
-
         <br/>
         <br/>
         {#select test suite and feature#}
@@ -108,57 +115,54 @@
         <div class="row">
 
             <div class="scenario col-md-3" id="left">
-                Scenario Name:
-                <input id="scenarioName" type="text" placeholder="Name your scenario!" class="form-control input-sm"/>
+                <form id="submitNewStepDefinition" method="post" name="submitNewStepDefinition" action="">
 
+                    Scenario Name:
+                    <input id="scenarioName" type="text" placeholder="Name your scenario!" class="form-control input-sm" required/>
 
-                Select Test Suite
-                <select class="form-control" title="testSuitesSelect" id="testSuitesSelect" onchange="populateFeatureList()">
+                    Select Test Suite
+                    <select class="form-control" title="testSuitesSelect" id="testSuitesSelect" onchange="populateFeatureList()" required>
+                        <option disabled selected value>  </option>
+                        {% for suite in testSuites %}
+
+                            <option> {{ suite.name }} </option>
+
+                        {% endfor %}
+                    </select>
+                    Select Feature
+                    {# This select is automatically filled in by the onchange event above #}
+                    <select class="form-control" title="featureSelect" name="featureSelect" id="featureSelect" required>
+                        <option disabled selected value>  </option>
+                    </select>
+                    <br>
+
+                    <input type="submit" name="Save to Feature"  class="btn-md"/>
+
+                </form>
+                <div class="scenario col-md-9" id="right">
+                    <div id="stepDefinitionFinal"> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div class="col-md-3" id="right">
+            <br>
+            <br>
+            <br>
+            <div>
+                Filesystem
+                <ul class="" title="testSuitesSelect">
+                    <option disabled selected value>  </option>
                     {% for suite in testSuites %}
 
-                        <option> {{ suite.name }} </option>
+                        <li> {{ suite.name }} </li>
 
                     {% endfor %}
-                </select>
-
-
-                Select Feature
-                <select class="form-control" title="featureSelect" name="featureSelect" id="featureSelect">
-                    {% for feature in featuresInSuite %}
-
-                        <option> {{ feature.name }} </option>
-
-                    {% endfor %}
-                </select>
-                <br>
-                <input type="submit" name="Save to Feature"  class="btn-md"/>
+                </ul>
             </div>
 
-            <div class="scenario col-md-9" id="right">
-
-            </div>
-
-
         </div>
-
     </div>
-
-    <div class="col-md-3" id="right">
-        <br>
-        <br>
-        <br>
-        <div>
-            Filesystem
-            <ul class="" title="testSuitesSelect">
-                {% for suite in testSuites %}
-
-                    <li> {{ suite.name }} </li>
-
-                {% endfor %}
-            </ul>
-        </div>
-
-    </div>
-</div>
 </body>
 </html>
